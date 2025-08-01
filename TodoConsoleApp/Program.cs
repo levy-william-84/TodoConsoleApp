@@ -1,9 +1,7 @@
 ﻿string userInput;
 List<string> todoList = new List<string>();
 
-header();
-showAllTodos();
-userOptionMenu();
+mainView();
 
 do
 {
@@ -18,7 +16,7 @@ do
     }
     if (userInput == "U")
     {
-        //UpdateTodoItem();
+        updateTodoItem();
         //testingUserInput(userInput);
     }
     if (userInput == "R") 
@@ -45,7 +43,7 @@ void showAllTodos()
 
     if (todoList.Count == 0)
     {
-        Console.WriteLine("TODO List is empty.\n");
+        Console.WriteLine("TODO List is currently empty.\n");
     }
     else
     {
@@ -63,7 +61,9 @@ void userOptionMenu()
     Console.WriteLine("[A]dd a TODO");
     Console.WriteLine("[U]pdate a TODO");
     Console.WriteLine("[R]emove a TODO");
-    Console.WriteLine("[E]xit");
+    Console.WriteLine("[E]xit\n");
+
+    Console.Write("Select an option: ");
 }
 
 void validateUserInput(string userInput)
@@ -71,7 +71,7 @@ void validateUserInput(string userInput)
     if (userInput != "A" && userInput != "U"
         && userInput != "R" && userInput != "E")
     {
-        Console.WriteLine("Please enter a valid choice");
+        Console.Write("Please enter a valid choice: ");
     }
 }
 
@@ -82,9 +82,28 @@ void addTodoItem()
     Console.WriteLine("Please enter a task to add to your TODO list");
     userTodoInput = Console.ReadLine();
     todoList.Add(userTodoInput);
-    Console.WriteLine("Press any key to return to the main window");
-    Console.ReadKey();
     Console.Clear();
+    mainView();
+}
+
+void updateTodoItem()
+{
+    int updateInput;
+    Console.WriteLine("Please enter the task number you wish to update");
+    updateInput = int.Parse(Console.ReadLine());
+
+    Console.Clear();
+    Console.WriteLine("You have selected the following to update.");
+    Console.WriteLine("{0}: {1}", updateInput, todoList[updateInput - 1]);
+    Console.WriteLine("What would you like it to be updated to?");
+    userInput = Console.ReadLine();
+    todoList[updateInput - 1] = userInput;
+    Console.Clear();
+    mainView();
+}
+
+void mainView()
+{
     header();
     showAllTodos();
     userOptionMenu();
