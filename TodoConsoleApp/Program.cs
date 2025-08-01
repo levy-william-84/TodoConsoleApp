@@ -21,7 +21,7 @@ do
     }
     if (userInput == "R") 
     {
-        //RemoveTodoItem();
+        removeTodoItem();
         //testingUserInput(userInput);
     }
 
@@ -82,7 +82,6 @@ void addTodoItem()
     Console.WriteLine("Please enter a task to add to your TODO list");
     userTodoInput = Console.ReadLine();
     todoList.Add(userTodoInput);
-    Console.Clear();
     mainView();
 }
 
@@ -98,12 +97,21 @@ void updateTodoItem()
     Console.WriteLine("What would you like it to be updated to?");
     userInput = Console.ReadLine();
     todoList[updateInput - 1] = userInput;
-    Console.Clear();
+    mainView();
+}
+
+void removeTodoItem()
+{
+    int removeInput;
+    Console.WriteLine("Please enter the task number you wish to remove");
+    removeInput = int.Parse(Console.ReadLine());
+    todoList.Remove(todoList[removeInput - 1]);
     mainView();
 }
 
 void mainView()
 {
+    Console.Clear();
     header();
     showAllTodos();
     userOptionMenu();
