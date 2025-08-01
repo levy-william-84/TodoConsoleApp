@@ -1,27 +1,27 @@
 ﻿string userInput;
 List<string> todoList = new List<string>();
 
-mainView();
+MainView();
 
 do
 {
     userInput = Console.ReadLine().ToUpper();
 
-    validateUserInput(userInput);
+    ValidateUserInput(userInput);
 
     if (userInput == "A")
     {
-        addTodoItem();
+        AddTodoItem();
         //testingUserInput(userInput);
     }
     if (userInput == "U")
     {
-        updateTodoItem();
+        UpdateTodoItem();
         //testingUserInput(userInput);
     }
     if (userInput == "R") 
     {
-        removeTodoItem();
+        RemoveTodoItem();
         //testingUserInput(userInput);
     }
 
@@ -31,13 +31,14 @@ while (userInput != "E");
 Console.WriteLine("Work completed. Press any key to close the app.");
 Console.ReadKey();
 
-void header()
+#region View
+void Header()
 {
     Console.WriteLine("Hello!");
     Console.WriteLine("What do you want to do?\n");
 }
 
-void showAllTodos()
+void ShowAllTodos()
 {
     int count = 1;
 
@@ -56,7 +57,7 @@ void showAllTodos()
     Console.WriteLine("\n");
 }
 
-void userOptionMenu()
+void UserOptionMenu()
 {
     Console.WriteLine("[A]dd a TODO");
     Console.WriteLine("[U]pdate a TODO");
@@ -66,30 +67,32 @@ void userOptionMenu()
     Console.Write("Select an option: ");
 }
 
-void validateUserInput(string userInput)
+void MainView()
 {
-    if (userInput != "A" && userInput != "U"
-        && userInput != "R" && userInput != "E")
-    {
-        Console.Write("Please enter a valid choice: ");
-    }
+    Console.Clear();
+    Header();
+    ShowAllTodos();
+    UserOptionMenu();
 }
 
-void addTodoItem()
+#endregion
+
+void AddTodoItem()
 {
     Console.Clear();
     string userTodoInput;
     Console.WriteLine("Please enter a task to add to your TODO list");
-    userTodoInput = Console.ReadLine();
+    userTodoInput = ValidateStringIsNotEmpty(Console.ReadLine());
     todoList.Add(userTodoInput);
-    mainView();
+    MainView();
 }
 
-void updateTodoItem()
+void UpdateTodoItem()
 {
-    int updateInput;
+    
     Console.WriteLine("Please enter the task number you wish to update");
-    updateInput = int.Parse(Console.ReadLine());
+    
+    int updateInput = ValidateIndexInput(Console.ReadLine());
 
     Console.Clear();
     Console.WriteLine("You have selected the following to update.");
@@ -97,25 +100,91 @@ void updateTodoItem()
     Console.WriteLine("What would you like it to be updated to?");
     userInput = Console.ReadLine();
     todoList[updateInput - 1] = userInput;
-    mainView();
+    MainView();
 }
 
-void removeTodoItem()
+void RemoveTodoItem()
 {
-    int removeInput;
-    Console.WriteLine("Please enter the task number you wish to remove");
-    removeInput = int.Parse(Console.ReadLine());
+    
+    Console.Write("Please enter the task number you wish to remove ");
+    int removeInput = ValidateIndexInput(Console.ReadLine());
     todoList.Remove(todoList[removeInput - 1]);
-    mainView();
+    MainView();
 }
 
-void mainView()
+#region Validation
+void ValidateUserInput(string userInput)
 {
-    Console.Clear();
-    header();
-    showAllTodos();
-    userOptionMenu();
+    if (userInput != "A" && userInput != "U"
+        && userInput != "R" && userInput != "E")
+    {
+        Console.Write("Please enter a valid choice: ");
+    }
 }
+string ValidateStringIsNotEmpty(string input)
+{
+    string userInput = input;
+    bool isEmpty = true;
+
+    do
+    {
+        if (userInput == "")
+        {
+            Console.Write("Please enter a task: ");
+            userInput = Console.ReadLine();
+        }
+        else
+        {
+            isEmpty = false;
+        }
+
+    }
+    while (isEmpty != false);
+
+    return userInput;
+}
+
+int ValidateIndexInput(string userInput)
+{
+    int result = 0;
+    int indexNumber = ConvertFromString(userInput);
+    bool isValid = false;
+
+    do
+    {
+        if (indexNumber > todoList.Count || indexNumber <= 0)
+        {
+            Console.Write("You selected an invalid number. Please select the task number: ");
+            indexNumber = ConvertFromString(Console.ReadLine());
+        }
+        else
+        {
+            isValid = true;
+        }
+
+    }
+    while (isValid != true);
+
+    result = indexNumber;
+
+    return result;
+}
+
+int ConvertFromString(string input)
+{
+    int result;
+    string userInput = input;
+
+    while (!int.TryParse(userInput, out result))
+    {
+        Console.Write("Please enter a valid task number: ");
+        userInput = Console.ReadLine();
+    }
+
+    return result;
+} 
+#endregion
+
 
 //void testingUserInput(string userInput)
 //{
