@@ -13,7 +13,7 @@ do
 
     if (userInput == "A")
     {
-        //addTodoItem();
+        addTodoItem();
         //testingUserInput(userInput);
     }
     if (userInput == "U")
@@ -41,21 +41,27 @@ void header()
 
 void showAllTodos()
 {
+    int count = 1;
+
     if (todoList.Count == 0)
     {
         Console.WriteLine("TODO List is empty.\n");
     }
     else
     {
-        Console.WriteLine("This will display all todos");
+        foreach (var item in todoList)
+        {
+            Console.WriteLine($"{count}: " + item);
+            count++;
+        }
     }
-
+    Console.WriteLine("\n");
 }
 
 void userOptionMenu()
 {
     Console.WriteLine("[A]dd a TODO");
-    Console.WriteLine("[U]pdate a TODOs");
+    Console.WriteLine("[U]pdate a TODO");
     Console.WriteLine("[R]emove a TODO");
     Console.WriteLine("[E]xit");
 }
@@ -67,6 +73,21 @@ void validateUserInput(string userInput)
     {
         Console.WriteLine("Please enter a valid choice");
     }
+}
+
+void addTodoItem()
+{
+    Console.Clear();
+    string userTodoInput;
+    Console.WriteLine("Please enter a task to add to your TODO list");
+    userTodoInput = Console.ReadLine();
+    todoList.Add(userTodoInput);
+    Console.WriteLine("Press any key to return to the main window");
+    Console.ReadKey();
+    Console.Clear();
+    header();
+    showAllTodos();
+    userOptionMenu();
 }
 
 //void testingUserInput(string userInput)
