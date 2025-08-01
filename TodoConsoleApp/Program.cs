@@ -5,7 +5,33 @@ header();
 showAllTodos();
 userOptionMenu();
 
+do
+{
+    userInput = Console.ReadLine().ToUpper();
 
+    validateUserInput(userInput);
+
+    if (userInput == "A")
+    {
+        //addTodoItem();
+        //testingUserInput(userInput);
+    }
+    if (userInput == "U")
+    {
+        //UpdateTodoItem();
+        //testingUserInput(userInput);
+    }
+    if (userInput == "R") 
+    {
+        //RemoveTodoItem();
+        //testingUserInput(userInput);
+    }
+
+}
+while (userInput != "E");
+
+Console.WriteLine("Work completed. Press any key to close the app.");
+Console.ReadKey();
 
 void header()
 {
@@ -34,4 +60,16 @@ void userOptionMenu()
     Console.WriteLine("[E]xit");
 }
 
-Console.ReadKey();
+void validateUserInput(string userInput)
+{
+    if (userInput != "A" && userInput != "U"
+        && userInput != "R" && userInput != "E")
+    {
+        Console.WriteLine("Please enter a valid choice");
+    }
+}
+
+//void testingUserInput(string userInput)
+//{
+//    Console.WriteLine("User Entered: " + userInput);
+//}
