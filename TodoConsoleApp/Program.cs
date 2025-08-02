@@ -14,12 +14,12 @@ do
         AddTodoItem();
         //testingUserInput(userInput);
     }
-    if (userInput == "U")
+    else if (userInput == "U")
     {
         UpdateTodoItem();
         //testingUserInput(userInput);
     }
-    if (userInput == "R") 
+    else if (userInput == "R") 
     {
         RemoveTodoItem();
         //testingUserInput(userInput);
@@ -80,9 +80,8 @@ void MainView()
 void AddTodoItem()
 {
     Console.Clear();
-    string userTodoInput;
     Console.WriteLine("Please enter a task to add to your TODO list");
-    userTodoInput = ValidateStringIsNotEmpty(Console.ReadLine());
+    string userTodoInput = ValidateStringIsNotEmpty(Console.ReadLine());
     todoList.Add(userTodoInput);
     MainView();
 }
